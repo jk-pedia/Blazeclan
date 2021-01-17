@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>node
+    <meta charset="utf-8" />
+    <title>Products</title>
+    <style type="text/css"> 
+        table, td {
+          border:double;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Information Page</h1>
+    <form method="post">
+        <table>
+            <tr>
+                <td>Product Id:</td>
+                <td>
+                    <input type="text" name="pid" id="pid"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Product Name:</td>
+                <td>
+                    <input type="text" name="pname" id="pname"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Product price:</td>
+                <td>
+                    <input type="number" name="pprice" id="pprice"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Save" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script type="text/javascript">
+        function btnSubmit()
+        {
+            alert("Submit clicked");
+
+            let ProductId = document.getElementById("pid").value;
+            let ProductName = document.getElementById("pname").value;
+            let ProductPrice = document.getElementById("pprice").value;
+
+            let Product = {};
+
+            Product["Pname"] = ProductName;
+            Product["pprice"] = ProductPrice;
+            Product["pid"] = ProductId;
+
+            console.log(JSON.stringify(Product));
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.onload = function()
+            {
+                if(xhr.status == 200)
+                {
+                    console.log("Added successfully");
+                }
+
+                else
+                {
+                    console.log("Add unsuccessful");   
+                }
+            };
+
+            xhr.onerror = function()
+            {
+                console.log("Some error occured"); 
+            };
+
+            xhr.open('POST','http://localhost:5050');
+            xhr.setRequestHeader("Content-Type","application/json");
+
+            xhr.send(JSON.stringify(Product));
+
+        }
+    </script>
+
+</body>
+</html>
